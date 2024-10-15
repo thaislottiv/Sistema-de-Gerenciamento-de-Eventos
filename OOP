@@ -1,0 +1,65 @@
+class Evento {
+  constructor(nome, data, local) {
+    this.nome = nome;
+    this.data = new Date(data);
+    this.local = local;
+    this.participantes = [];
+  }
+
+  adicionarParticipante(participante) {
+    this.participantes.push(participante);
+    console.log(`${participante} foi adicionado ao evento ${this.nome}`);
+  }
+
+  removerParticipante(participante) {
+    const index = this.participantes.indexOf(participante);
+    if (index !== -1) {
+      this.participantes.splice(index, 1);
+      console.log(`${participante} foi removido do evento ${this.nome}`);
+    } else {
+      console.log(`${participante} não encontrado no evento ${this.nome}`);
+    }
+  }
+
+  listarParticipantes() {
+    console.log(`Participantes do evento ${this.nome}:`);
+    this.participantes.forEach((participante, index) => {
+      console.log(`${index + 1}. ${participante}`);
+    });
+  }
+}
+
+// Classe Gerenciador de Eventos
+class GerenciadorEventos {
+  constructor() {
+    this.eventos = [];
+  }
+
+  criarEvento(nome, data, local) {
+    const novoEvento = new Evento(nome, data, local);
+    this.eventos.push(novoEvento);
+    console.log(`Evento ${nome} criado para ${data} em ${local}`);
+    return novoEvento;
+  }
+
+  listarEventos() {
+    console.log('Eventos Disponíveis:');
+    this.eventos.forEach((evento, index) => {
+      console.log(`${index + 1}. ${evento.nome} - ${evento.data.toDateString()} no ${evento.local}`);
+    });
+  }
+}
+
+const gerenciador = new GerenciadorEventos();
+
+// Criando eventos
+const evento1 = gerenciador.criarEvento('Workshop JavaScript', '2024-11-10', 'São Paulo');
+const evento2 = gerenciador.criarEvento('Conferência de Tecnologia', '2024-12-01', 'Rio de Janeiro');
+
+evento1.adicionarParticipante('Thais Lotti');
+evento1.adicionarParticipante('João Silva');
+evento1.adicionarParticipante('Maria Santos');
+
+evento1.listarParticipantes();
+evento1.removerParticipante('João Silva');
+gerenciador.listarEventos();
